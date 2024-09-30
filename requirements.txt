@@ -1,0 +1,8 @@
+flask
+matplotlib
+pandas
+numpy
+joblib
+torch
+torchvision
+torchaudio
