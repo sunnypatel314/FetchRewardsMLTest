@@ -31,7 +31,7 @@ This web app allows us to perform an inference procedure on a machine learning m
   ```
   docker run -p 8000:8000 receipts_predictor
   ```
-- Port 8000 should be ready for your HTTP requests.
+- Port 8000 on your localhost should be ready for your HTTP requests:
 
 ## Running with Python (Slow/Manual Setup)
 - Clone this repository:
@@ -64,18 +64,18 @@ This web app allows us to perform an inference procedure on a machine learning m
   ```
   python app.py
   ```
-- Port 8000 should be ready for your HTTP requests.
-
+- Port 8000 on your localhost should be ready for your HTTP requests:
 
 ## API Endpoints
 
 I recommend using Postman for the API calls; that is what I will be showing in the documentation.
 Make sure you have selected the 'raw' radio button under the 'Body' tab and the data type for the requests is JSON.
-![image](https://github.com/user-attachments/assets/59384a21-136c-45db-99e7-3995d58fef68)
+![image](https://github.com/user-attachments/assets/fe7b608d-6785-4ef0-828c-a0ecf04d7b6a)
 
 Please keep your Postman data clean. Do not leave comments in the request body when sending requests. In my experience, this leads to weird behavior and errors.
 In other words, do not do something like this:
-![image](https://github.com/user-attachments/assets/175eb6cd-6e94-49cf-a84a-d763706d0760)
+![image](https://github.com/user-attachments/assets/abdccf7c-61ef-4c7c-a8b9-2f6b48e17551)
+
 
 #### POST "/predict" - Predict number of scanned receipts for given month
 - Request: 
@@ -92,9 +92,19 @@ In other words, do not do something like this:
   ```
 - Response:
    - Successful:
-       - **Status Code 200 (OK)** if the model successfully made a prediction.
+       - **Status Code 200 (OK)** if the model successfully made a prediction. It should also return a JSON body with a 'prediction' field showing the predicted number of scanned receipts for that month in 2022:
+         ```
+         {
+             "prediction": 334704288
+         }
+         ```
    - Unsuccessful:
-       - **Status Code 400 (Bad request)** if request includes an invalid data type or you are missing the field 'month'.
+       - **Status Code 400 (Bad request)** if request includes an invalid data type or you are missing the field 'month'. It should return a JSON body with an 'error' field indicating the error or mistake:
+         ```
+         {
+            "error": "You need a month field and it needs to be a string"
+         }
+         ```
 
 **Note about model training**: 
 If you want to train this model yourself, then you can download the python notebook in the ./notebooks folder and run it in Jupyter Notebook. 
